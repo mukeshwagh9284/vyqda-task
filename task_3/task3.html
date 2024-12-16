@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Phone Number to API</title>
+    <style>
+      /* Simple responsive styles for better UI */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      h1 {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #headersOutput {
+        margin-top: 20px;
+        background: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        word-wrap: break-word;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      ul li {
+        margin-bottom: 5px;
+      }
+
+      ul li strong {
+        color: #333;
+      }
+      .btn {
+        background-color: seagreen;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Send Phone Number</h1>
+      <label for="phoneNumber">Enter Phone Number:</label>
+      <input
+        type="text"
+        id="phoneNumber"
+        placeholder="Enter your phone number"
+      />
+      <button id="submitBtn" class="btn">Submit</button>
+
+      <div id="headersOutput"></div>
+    </div>
+
+    <!-- React Script -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+
+    <!-- JavaScript -->
+    <script>
+      document
+        .getElementById("submitBtn")
+        .addEventListener("click", async () => {
+          const phonenumber = document.getElementById("phoneNumber").value;
+
+          // Output container for headers
+          const headersOutput = document.getElementById("headersOutput");
+          headersOutput.innerHTML = "Loading...";
+
+          try {
+            // Post request to API
+            const response = await fetch("https://chimpu.online/api/post.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: `phonenumber=${encodeURIComponent(phonenumber)}`,
+            });
+
+            // Log the response headers and response object to console for debugging
+            console.log("Response Headers:", response.headers);
+            console.log("Full Response Object:", response);
+
+            // Extract headers
+            const responseHeaders = response.headers;
+            let headersList = "<h3>Response Headers:</h3><ul>";
+
+            for (let [key, value] of responseHeaders.entries()) {
+              headersList += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+            headersList += "</ul>";
+
+            // Display headers on the page
+            headersOutput.innerHTML = headersList;
+          } catch (error) {
+            // Handle errors
+            headersOutput.innerHTML = `<p style="color: red;">Error occurred: ${error.message}</p>`;
+          }
+        });
+    </script>
+  </body>
+</html>
