@@ -11,8 +11,8 @@ const Listnotes = () => {
     axios
       .get("/user/getnote")
       .then((res) => {
-        console.log("Fetched Notes:", res.data); // Log the response
-        setNotes(res.data.data); // Populate notes from the server
+        console.log("Fetched Notes:", res.data);
+        setNotes(res.data.data);
       })
       .catch((err) => {
         console.error("Error fetching notes:", err);
@@ -51,11 +51,7 @@ const Listnotes = () => {
       <div className="d-flex flex-wrap justify-content-around">
         {userNotes.length > 0 ? (
           userNotes.map((note) => (
-            <Notescard
-              key={note.id} // Use note.id instead of note._id
-              note={note}
-              deleteNote={deleteNote}
-            />
+            <Notescard key={note.id} note={note} deleteNote={deleteNote} />
           ))
         ) : (
           <p>No notes available. Add some notes to get started!</p>

@@ -4,9 +4,9 @@ const mysql = require("mysql2");
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "Mukesh@9284", // Replace with your MySQL password
-  database: "notes", // Replace with your database name
-  port: 3306, // Default MySQL port
+  password: "Mukesh@9284",
+  database: "notes",
+  port: 3306,
 });
 
 // Test the connection
